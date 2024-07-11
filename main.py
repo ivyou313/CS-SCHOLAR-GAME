@@ -1,3 +1,48 @@
+import pygame
+from player import Player
+from applw import Pong
+from ground import Ground
+import math
+import pygame.mouse 
+from pgzrun import *
+
+
+from pygame.locals import (
+  K_UP,
+  K_DOWN,
+  K_LEFT,
+  K_RIGHT,
+  K_SPACE,
+  QUIT 
+
+)
+
+pygame.init()
+clock = pygame.time.Clock()
+
+WIDTH = 600
+HEIGHT = 600
+
+X0 = WIDTH // 2
+Y0 = HEIGHT // 2
+
+COUNT_CIRCLES = 100                     # Total number of circles in the tunnel
+STEP_RADIUS = 10                         # Space between circles
+STEP_COLOR = (255-50) / COUNT_CIRCLES    # Brightness of the circles? 
+
+# a list containing ellipses, each element of this list is also
+# list of numbers representing center coordinates, radius and tint:
+# [X, Y, RADIUS, COLOR]
+сircles = []
+
+
+
+
+screen = pygame.display.set_mode((500, 400))
+player = Player()
+screenWidth = 400
+screenHeight = 300
+isFlor = False
 ground = Ground()
 cooldown = 400
 
@@ -28,7 +73,9 @@ while True:
     bullets.add(pong)
     last = pygame.time.get_ticks()
 
+
   bullets.update()
+
 
   if hasFloored:
       isFlor = True
@@ -40,10 +87,7 @@ while True:
             
 
   player.update(playerkeys, isFlor)
-
-  
-
-
+ 
 
   pygame.display.update()
  # while moving == True:
