@@ -32,8 +32,8 @@ def draw_circle(circle):
     circle_color = circle[3]
 
     while angle < math.pi * 2:
-        x = round(circle_x + math.sin(angle) * circle_r)
-        y = round(circle_y + math.cos(angle) * circle_r // 1.5)
+        x = round(circle_x + math.sin(angle) * circle_r // 3)
+        y = round(circle_y + math.cos(angle) * circle_r // 3)
 
         if 0 < x < WIDTH and 0 < y < HEIGHT:
             screen.draw.filled_circle((x, y), 2, (0, circle_color, circle_color))
