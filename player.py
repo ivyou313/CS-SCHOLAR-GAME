@@ -8,6 +8,9 @@ from pygame.locals import (
   K_LEFT,
   K_RIGHT,
   K_SPACE,
+  K_w,
+  K_a,
+  K_d,
   QUIT
 )
 screenWidth = 400
@@ -17,10 +20,10 @@ speed = 7
 
 
 #Player
-class Player( pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
   def __init__(self):
     super(Player, self).__init__()
-    self.surf = pygame.Surface((snakeWidth, 40), pygame.SRCALPHA)
+    self.surf = pygame.Surface((snakeWidth, snakeWidth), pygame.SRCALPHA)
     #self.surf.fill((18, 107, 4))
     pygame.gfxdraw.filled_circle(self.surf, 20, 20, 18, (245, 154, 178))
     #pygame.gfxdraw.aacircle(self.surf, 20, 20, 18, (0,0,0))
@@ -38,7 +41,7 @@ class Player( pygame.sprite.Sprite):
 
     if isFlor == True:
       self.yOffset = 0
-      if playerkeys[K_UP]:
+      if playerkeys[K_UP] or playerkeys[K_w]:
         self.yOffset = -18
     else:
       self.yOffset += 1 
@@ -51,13 +54,13 @@ class Player( pygame.sprite.Sprite):
 
     #elif playerkeys[K_DOWN] and self.rect.y < 382:
      #self.rect.move_ip(0,7)
-    if playerkeys[K_LEFT] and self.rect.x >0:
-     self.rect.move_ip(-7,0) 
-    elif playerkeys[K_RIGHT] and self.rect.x < 483:
-     self.rect.move_ip(7,0)
+    if (playerkeys[K_LEFT] or playerkeys[K_a]) and self.rect.x >0:
+     self.rect.move_ip(-speed,0) 
+    elif (playerkeys[K_RIGHT]or playerkeys[K_d]) and self.rect.x < 483:
+     self.rect.move_ip(speed,0)
 
-  def createBull(self):
+  # def createBull(self):
       
-         return Pong(self.rect.x, self.rect.y)
+  #        return Pong(self.rect.x, self.rect.y)
 
   
