@@ -2,9 +2,11 @@ import pygame
 from player import Player
 from applw import Pong
 from ground import Ground
+from enemy import Enemy
 import math
 import pygame.mouse 
 from pgzrun import *
+import random as random
 
 
 from pygame.locals import (
@@ -13,47 +15,38 @@ from pygame.locals import (
   K_LEFT,
   K_RIGHT,
   K_SPACE,
-  QUIT 
+  QUIT
 
 )
 
 pygame.init()
 clock = pygame.time.Clock()
 
-WIDTH = 600
-HEIGHT = 600
-
-X0 = WIDTH // 2
-Y0 = HEIGHT // 2
-
-COUNT_CIRCLES = 100                     # Total number of circles in the tunnel
-STEP_RADIUS = 10                         # Space between circles
-STEP_COLOR = (255-50) / COUNT_CIRCLES    # Brightness of the circles? 
-
-# a list containing ellipses, each element of this list is also
-# list of numbers representing center coordinates, radius and tint:
-# [X, Y, RADIUS, COLOR]
-сircles = []
 
 
 
-
-screen = pygame.display.set_mode((500, 400))
 player = Player()
-screenWidth = 400
-screenHeight = 300
+#enemy = Enemy()
+screenWidth = 500
+screenHeight = 400
 isFlor = False
 ground = Ground()
 cooldown = 400
+screen = pygame.display.set_mode((screenWidth, screenHeight))
+backGround = pygame.image.load('bg RESIZED.png')
+backGround = pygame.transform.scale(backGround, (screenWidth, screenHeight))
 
 allSprites = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
+enemies = pygame.sprite.Group()
 allSprites.add(ground)
 allSprites.add(player)
+xPlaces = [100, 400, 260, 300, 140]
+
 
 pong = Pong(10,10)
 last = pygame.time.get_ticks()
-
+lastEnemy = pygame.time.get_ticks()
 
 while True:
   clock.tick(60)
@@ -72,9 +65,18 @@ while True:
     allSprites.add(pong)
     bullets.add(pong)
     last = pygame.time.get_ticks()
+  if (now - lastEnemy >= 500) and len(enemies) <= 5:
+      enemy = Enemy(random.randint(200,300), random.randint(150,200), random.choice(xPlaces))
+      enemies.add(enemy)
+      lastEnemy = pygame.time.get_ticks()
 
+  if pygame.sprite.spritecollide(player, enemies, True):
+      print(" Minus 1 health")
 
-  bullets.update()
+  screen.blit(backGround, (0,0))
+
+  bullets.update(player)
+  enemies.update(lastEnemy)
 
 
   if hasFloored:
@@ -84,11 +86,9 @@ while True:
 
   for sprite in allSprites:
             screen.blit(sprite.surf, sprite.rect)
-            
+  for en in enemies:
+    screen.blit(en.surf, en.rect)         
 
   player.update(playerkeys, isFlor)
- 
 
   pygame.display.update()
- # while moving == True:
-  # player.rect.x += 1
