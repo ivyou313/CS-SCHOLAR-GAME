@@ -4,11 +4,11 @@ from applw import Pong
 from ground import Ground
 from enemy import Enemy
 import math
-import pygame.mouse 
+import pygame.mouse
 from pgzrun import *
 import random as random
 
-
+# Ask what we should do for health bar like 3 lives or idk
 from pygame.locals import (
   K_UP,
   K_DOWN,
@@ -31,7 +31,7 @@ screenWidth = 500
 screenHeight = 400
 isFlor = False
 ground = Ground()
-cooldown = 400
+cooldown = 500
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 backGround = pygame.image.load('bg RESIZED.png')
 backGround = pygame.transform.scale(backGround, (screenWidth, screenHeight))
@@ -72,11 +72,13 @@ while True:
 
   if pygame.sprite.spritecollide(player, enemies, True):
       print(" Minus 1 health")
+  if pygame.sprite.groupcollide(bullets, enemies, True, True):
+      print(" End the squares")
 
   screen.blit(backGround, (0,0))
 
   bullets.update(player)
-  enemies.update(lastEnemy)
+  enemies.update()
 
 
   if hasFloored:
@@ -86,9 +88,16 @@ while True:
 
   for sprite in allSprites:
             screen.blit(sprite.surf, sprite.rect)
+  
+
   for en in enemies:
-    screen.blit(en.surf, en.rect)         
+    screen.blit(en.surf, en.rect)
+          
+            
 
   player.update(playerkeys, isFlor)
+ 
 
   pygame.display.update()
+ # while moving == True:
+  # player.rect.x += 1
