@@ -10,9 +10,9 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 400, 300
 BG_COLOR = (0, 0, 0)
 
 # Load assets
-CUSTOM_FONT = "startassets/spacegeometryfont.otf"
-BACKGROUND_IMAGE = "startassets/background.png"
-LOGO_IMAGE = "startassets/logo.png"
+CUSTOM_FONT = "spacegeometryfont.otf"
+BACKGROUND_IMAGE = "background.png"
+LOGO_IMAGE = "logo.png"
 LOGO_WIDTH = 250
 
 # Screen setup
@@ -27,7 +27,7 @@ logo_height = int(LOGO_WIDTH / logo_original.get_width() * logo_original.get_hei
 logo = pygame.transform.scale(logo_original, (LOGO_WIDTH, logo_height))
 
 # Load the background and logo images
-background_images = [pygame.image.load(f"startshapes/{i}.png").convert_alpha() for i in range(3, 12)]
+background_images = [pygame.image.load(f"{i}.png").convert_alpha() for i in range(3, 12)]
 
 # Load custom font
 font_path = os.path.join(os.path.dirname(__file__), CUSTOM_FONT)
